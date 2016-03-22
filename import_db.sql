@@ -67,3 +67,18 @@ INSERT INTO
   questions (title, body, author_id)
 VALUES
   ('Does this work', 'yayayaya', 1);
+
+INSERT INTO
+  question_follows (user_id, question_id)
+VALUES
+  (1,1);
+
+INSERT INTO
+  replies (question_id, user_id, body)
+VALUES
+  (1,1, 'test reply');
+
+INSERT INTO
+  question_likes (user_id, question_id)
+VALUES
+  (1,1);
