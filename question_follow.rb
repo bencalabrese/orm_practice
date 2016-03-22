@@ -24,7 +24,21 @@ class QuestionFollow
         id = ?
     SQL
 
-    QuestionFollow.new(data.first)
+  data.map { |datum| QuestionFollow.new(datum) }
+  end
+
+  def self.followers_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+      SELECT
+        users.*
+      FROM
+        question_follows
+        JOIN users ON users.id = question_follows.user_id
+      WHERE
+        question_follows.question_id = ?
+    SQL
+
+    data.map { |datum| QuestionFollow.new(datum) }
   end
 
   def initialize(opts)
