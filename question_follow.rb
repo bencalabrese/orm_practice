@@ -38,8 +38,24 @@ class QuestionFollow
         question_follows.question_id = ?
     SQL
 
-    data.map { |datum| QuestionFollow.new(datum) }
+    data.map { |datum| User.new(datum) }
   end
+
+  def self.questions_for_user_id(user_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT
+        questions.*
+      FROM
+        question_follows
+        JOIN questions ON questions.id = question_follows.question_id
+      WHERE
+        question_follows.user_id = ?
+    SQL
+
+    data.map { |datum| Question.new(datum) }
+  end
+
+  
 
   def initialize(opts)
     @id = opts['id']
