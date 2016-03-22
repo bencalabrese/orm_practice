@@ -61,24 +61,29 @@ CREATE TABLE question_likes (
 INSERT INTO
   users (fname, lname)
 VALUES
-  ('John','Doe');
+  ('John','Doe'),
+  ('James','Doe');
 
 INSERT INTO
   questions (title, body, user_id)
 VALUES
-  ('Does this work', 'yayayaya', 1);
+  ('Does this work', 'yayayaya', 1),
+  ('Second question','Second Question Body', 2);
 
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
-  (1,1);
+  (1,1),
+  (2,1);
 
 INSERT INTO
-  replies (question_id, user_id, body)
+  replies (question_id, user_id, body, parent_id)
 VALUES
-  (1,1, 'test reply');
+  (1,1, 'test reply',NULL),
+  (1,2,'child reply',1);
 
 INSERT INTO
   question_likes (user_id, question_id)
 VALUES
-  (1,1);
+  (1,1),
+  (2,2);

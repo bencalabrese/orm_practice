@@ -47,28 +47,10 @@ class User
   end
 
   def authored_questions
-    data = QuestionsDatabase.instance.execute(<<-SQL, user_id: @id)
-      SELECT
-        *
-      FROM
-        questions
-      WHERE
-        user_id = :user_id
-    SQL
-
-    data.map { |datum| Question.new(datum) }
+    Question.find_by_author_id(@id)
   end
 
   def authored_replies
-    data = QuestionsDatabase.instance.execute(<<-SQL, user_id: @id)
-      SELECT
-        *
-      FROM
-        replies
-      WHERE
-        user_id = :user_id
-    SQL
-
-    data.map { |datum| Reply.new(datum) }
+     Reply.find_by_user_id(@id)
   end
 end

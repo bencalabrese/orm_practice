@@ -48,15 +48,10 @@ class Question
   end
 
   def author
-    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
-      SELECT
-        *
-      FROM
-        users
-      WHERE
-        id = ?
-    SQL
+    User.find_by_id(user_id)
+  end
 
-    User.new(data.first)
+  def replies
+    Reply.find_by_question_id(@id)
   end
 end

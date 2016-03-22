@@ -1,7 +1,7 @@
 require_relative 'manifest'
 
 class Reply
-  attr_accessor :question_id,:user_id,:body
+  attr_accessor :question_id,:user_id,:body,:parent_id
 
   def self.all
     data = QuestionsDatabase.instance.execute(<<-SQL)
@@ -24,7 +24,7 @@ class Reply
         id = ?
     SQL
 
-    Reply.new(data.first)
+    data.map { |datum| Reply.new(datum) }
   end
 
   def self.find_by_user_id(user_id)
@@ -50,7 +50,7 @@ class Reply
         question_id = ?
     SQL
 
-    Reply.new(data.first)
+    data.map { |datum| Reply.new(datum) }
   end
 
   def initialize(opts)
@@ -58,5 +58,32 @@ class Reply
     @question_id = opts['question_id']
     @user_id = opts['user_id']
     @body = opts['body']
+    @parent_id = opts['parent_id']
   end
+
+  def author
+    User.find_by_id(user_id)
+  end
+
+  def question
+    Question.find_by_id(question_id)
+  end
+
+  def parent_reply
+    Reply.find_by_id(parent_id)
+  end
+
+  def child_replies
+    data = QuestionsDatabase.instance.execute(<<-SQL, @id)
+      SELECT
+        *
+      FROM
+        replies
+      WHERE
+        parent_id = ?
+    SQL
+
+    data.map { |datum| Reply.new(datum) }
+  end
+
 end
