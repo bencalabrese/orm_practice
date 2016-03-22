@@ -68,13 +68,17 @@ INSERT INTO
   questions (title, body, user_id)
 VALUES
   ('Does this work', 'yayayaya', 1),
-  ('Second question','Second Question Body', 2);
+  ('Second question','Second Question Body', 2),
+  ('Who am I?', 'Whats my name?', 1),
+  ('Red pill or blue pill', 'from Agent Smith', 2);
 
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
   (1,1),
-  (2,1);
+  (2,1),
+  (1,3),
+  (2,4);
 
 INSERT INTO
   replies (question_id, user_id, body, parent_id)
