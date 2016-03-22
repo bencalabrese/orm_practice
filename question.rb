@@ -1,4 +1,4 @@
-require_relative 'orm'
+require_relative 'manifest'
 
 class Question
   attr_accessor :title,:body,:user_id
@@ -45,5 +45,18 @@ class Question
     @title = opts['title']
     @body = opts['body']
     @user_id = opts['user_id']
+  end
+
+  def author
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT
+        *
+      FROM
+        users
+      WHERE
+        id = ?
+    SQL
+
+    User.new(data.first)
   end
 end

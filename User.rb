@@ -1,6 +1,4 @@
-require_relative 'orm'
-require_relative 'question'
-require_relative 'reply'
+require_relative 'manifest'
 
 class User
   attr_accessor :fname, :lname

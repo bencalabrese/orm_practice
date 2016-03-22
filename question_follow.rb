@@ -1,4 +1,4 @@
-require_relative 'orm'
+require_relative 'manifest'
 
 class QuestionFollow
   attr_accessor :question_id,:user_id
