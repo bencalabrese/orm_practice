@@ -11,3 +11,24 @@ class QuestionsDatabase < SQLite3::Database
     self.results_as_hash = true
   end
 end
+
+class User
+  attr_accessor :fname, :lname
+
+  def self.all
+    data = QuestionsDatabase.instance.execute (<<-SQL)
+      SELECT
+        *
+      FROM
+        users
+      SQL
+
+    data.map { |datum| User.new(datum) }
+  end
+
+  def initialize(opts)
+    @id = opts['id']
+    @fname = opts['fname']
+    @lname = opts['lname']
+  end
+end
