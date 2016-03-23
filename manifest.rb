@@ -1,4 +1,5 @@
 require_relative 'orm'
+require_relative 'model_base'
 require_relative 'user'
 require_relative 'question'
 require_relative 'question_like'

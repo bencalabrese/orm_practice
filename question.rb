@@ -1,31 +1,7 @@
 require_relative 'manifest'
 
-class Question
+class Question < ModelBase
   attr_accessor :title,:body,:user_id
-
-  def self.all
-    data = QuestionsDatabase.instance.execute(<<-SQL)
-      SELECT
-        *
-      FROM
-        questions
-    SQL
-
-    data.map { |datum| Question.new(datum) }
-  end
-
-  def self.find_by_id(id)
-    data = QuestionsDatabase.instance.execute(<<-SQL, id)
-      SELECT
-        *
-      FROM
-        questions
-      WHERE
-        id = ?
-    SQL
-
-    Question.new(data.first)
-  end
 
   def self.find_by_author_id(author_id)
     data = QuestionsDatabase.instance.execute(<<-SQL, author_id)
@@ -74,5 +50,4 @@ class Question
   def num_likes
     QuestionLike.num_likes_for_question_id(@id)
   end
-
 end

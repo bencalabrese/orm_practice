@@ -1,31 +1,7 @@
 require_relative 'manifest'
 
-class Reply
+class Reply < ModelBase
   attr_accessor :question_id,:user_id,:body,:parent_id
-
-  def self.all
-    data = QuestionsDatabase.instance.execute(<<-SQL)
-      SELECT
-        *
-      FROM
-        replies
-    SQL
-
-    data.map { |datum| Reply.new(datum) }
-  end
-
-  def self.find_by_id(id)
-    data = QuestionsDatabase.instance.execute(<<-SQL, id)
-      SELECT
-        *
-      FROM
-        replies
-      WHERE
-        id = ?
-    SQL
-
-    data.map { |datum| Reply.new(datum) }
-  end
 
   def self.find_by_user_id(user_id)
     data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
